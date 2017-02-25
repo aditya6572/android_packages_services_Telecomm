@@ -200,10 +200,9 @@ final class Ringer extends CallsManagerListenerBase {
             // The foreground call is one of incoming calls so play the ringer out loud.
             stopCallWaiting(call);
 
-            boolean[] shouldRingOrVibrate =
-                    shouldRingOrVibrateForContact(foregroundCall.getContactUri());
-            boolean ringAllowed = shouldRingOrVibrate[0];
-            boolean vibrationAllowed = shouldRingOrVibrate[1];
+            if (!shouldRingForContact(foregroundCall.getContactUri())) {
+                return;
+            }
 
             AudioManager audioManager =
                     (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
